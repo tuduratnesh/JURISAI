@@ -1,46 +1,97 @@
-import React from "react";
+
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  const navigate = useNavigate(); 
-  const goToHomePage = () => {
-    navigate("/"); 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+
+    if (!name || !email || !password || !confirmPassword) {
+      setError("All fields are required");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    const existingUser = JSON.parse(localStorage.getItem("user"));
+
+    if (existingUser && existingUser.email === email) {
+      setError("Account already exists. Please log in.");
+      return;
+    }
+
+    const newUser = { name, email, password };
+    localStorage.setItem("user", JSON.stringify(newUser));
+
+    navigate("/login"); 
   };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 shadow-lg rounded-2xl w-96">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Sign Up</h2>
-        <form className="space-y-4">
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
+
+        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+
+        <form onSubmit={handleSignup}>
           <input
             type="text"
             placeholder="Full Name"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full p-2 border border-gray-300 rounded mt-2"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
+
           <input
             type="email"
-            placeholder="Email address"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            placeholder="Email"
+            className="w-full p-2 border border-gray-300 rounded mt-2"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
+
           <input
             type="password"
             placeholder="Password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full p-2 border border-gray-300 rounded mt-2"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
+
           <input
             type="password"
             placeholder="Confirm Password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full p-2 border border-gray-300 rounded mt-2"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
+
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300"
-            onClick={goToHomePage}
+            className="w-full bg-green-500 text-white py-2 rounded mt-4 hover:bg-green-700"
           >
-            Sign up
+            Sign Up
           </button>
         </form>
-        <p className="text-center text-gray-600 mt-4">
-          Already have an account? <a href="/login" className="text-blue-600 hover:underline">Log in</a>
+
+        <p className="mt-4 text-center">
+          Already have an account?{" "}
+          <span
+            className="text-blue-500 cursor-pointer"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </span>
         </p>
       </div>
     </div>
