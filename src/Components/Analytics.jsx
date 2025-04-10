@@ -12,7 +12,7 @@ function Analytics() {
          className="w-full outline-none"
       />
       <div>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 cursor-pointer">
   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
 </svg>
 
@@ -22,9 +22,9 @@ function Analytics() {
     <div>
       <div className='px-6 font-semibold text-2xl'>DOCUMENT QUEUE</div>
       <ol className='px-11 py-2 list-disc'>
-        <li className='py-1'>Pending</li>
-        <li className='py-1'>In progress</li>
-        <li className='py-1'>Completed</li>
+        <li className='py-1'>Pending(12)</li>
+        <li className='py-1'>In progress(8)</li>
+        <li className='py-1'>Completed(5)</li>
       </ol>
     </div>
     <div>
